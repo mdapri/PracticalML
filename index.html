@@ -176,7 +176,23 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h2>Fitting Data</h2>
 <p>Jump directly on the cart application of the tree, to get some insight. Ignore the NA and rereieve the importance of the variables for further consideration</p>
 <pre class="r"><code>har.sample.rf = randomForest(classe ~ ., data =training.Sample,importance=TRUE,na.action=na.omit)
-summary(har.sample.rf$err.rate)</code></pre>
+har.sample.rf</code></pre>
+<pre><code>## 
+## Call:
+##  randomForest(formula = classe ~ ., data = training.Sample, importance = TRUE,      na.action = na.omit) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 9
+## 
+##         OOB estimate of  error rate: 21.45%
+## Confusion matrix:
+##    A  B  C  D  E class.error
+## A 65  6  2  1  1   0.1333333
+## B 13 40  0  1  1   0.2727273
+## C  8  1 42  1  0   0.1923077
+## D  8  1  5 32  1   0.3191489
+## E  2  7  1  2 48   0.2000000</code></pre>
+<pre class="r"><code>summary(har.sample.rf$err.rate)</code></pre>
 <pre><code>##       OOB               A                B                C         
 ##  Min.   :0.1938   Min.   :0.1200   Min.   :0.2000   Min.   :0.1731  
 ##  1st Qu.:0.2042   1st Qu.:0.1333   1st Qu.:0.2545   1st Qu.:0.1923  
@@ -191,7 +207,7 @@ summary(har.sample.rf$err.rate)</code></pre>
 ##  Mean   :0.3159   Mean   :0.1993  
 ##  3rd Qu.:0.3191   3rd Qu.:0.2000  
 ##  Max.   :0.6538   Max.   :0.4259</code></pre>
-<p>The <em>err.rate</em> gives the vector error rates of the prediction on the input data, the i-th element being the (OOB) error rate for all trees up to the i-th<br />Predict the values on the test sample and check manually the rate.</p>
+<p>Cross validation is done automatically by the randomForest fucntion(see documentation) The <em>err.rate</em> gives the vector error rates of the prediction on the input data, the i-th element being the (OOB) error rate for all trees up to the i-th<br />Predict the values on the test sample and check manually the accuracy.</p>
 <pre class="r"><code>har.sample.predict = predict(har.sample.rf, newdata=test.Sample, type=&quot;response&quot;)
 t=table(predicted=har.sample.predict,observed=test.Sample[,&quot;classe&quot;])</code></pre>
 <pre><code>##          observed
