@@ -49,11 +49,13 @@ Jump directly on the cart application of the tree, to get some insight. Ignore t
 
 ```{r fit_rf, cache=FALSE, echo=TRUE}
 har.sample.rf = randomForest(classe ~ ., data =training.Sample,importance=TRUE,na.action=na.omit)
+har.sample.rf
 summary(har.sample.rf$err.rate)
 ```
+Cross validation is done automatically by the randomForest fucntion(see documentation)
 The *err.rate* gives the vector error rates of the prediction on the input data, the i-th
 element being the (OOB) error rate for all trees up to the i-th  
-Predict the values on the test sample and check manually the rate.
+Predict the values on the test sample and check manually the accuracy.
 ```{r predict_rf, cache=FALSE, echo=TRUE}
 har.sample.predict = predict(har.sample.rf, newdata=test.Sample, type="response")
 t=table(predicted=har.sample.predict,observed=test.Sample[,"classe"])
